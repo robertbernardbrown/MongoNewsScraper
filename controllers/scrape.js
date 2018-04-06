@@ -15,7 +15,7 @@ var url = "https://hackernoon.com/tagged/software-development";
 function storeData(error, response, html){
   if (error) throw error;
   var $ = cheerio.load(html);
-    mongoose.connection.db.dropCollection("articles");
+    // mongoose.connection.db.dropCollection("articles");
     $(".postArticle").each(function (i, element) {
       let item = {
         author: $(element).find("[data-user-id]").text(),
