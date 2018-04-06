@@ -12,7 +12,16 @@ mongoose.connection.on('error', function (err) {
 
 function displayData(error, collection){
   if (error) throw error;
-    
-}
+    db.Article.find({})
+    .then(function(err,data){
+        if (err) throw err;
+        console.log(data);
+    })
+    .catch(e=>{
+        console.error(e);
+    });
+};
+
+displayData();
 
 module.exports = displayData;
