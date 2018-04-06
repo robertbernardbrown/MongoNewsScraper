@@ -1,6 +1,6 @@
 const express = require("express");
 const router  = express.Router();
-const getData = require("./scrape");
+const data = require("./scrape");
 
 ///////////////////
 //ROUTE FUNCTIONS//
