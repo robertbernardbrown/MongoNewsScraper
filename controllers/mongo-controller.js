@@ -1,6 +1,6 @@
 const express = require("express");
 const router  = express.Router();
-const data = require("./scrape");
+const scrapeData = require("./scrape");
 
 ///////////////////
 //ROUTE FUNCTIONS//
@@ -9,7 +9,8 @@ function indexRender (req, res) {
   res.render("index");
 }
 function fetchData (req, res) {
-  getData();
+  var url = "https://hackernoon.com/tagged/software-development";
+  scrapeData(url);
 }
 
 //////////
