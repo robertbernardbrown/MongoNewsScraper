@@ -10,12 +10,12 @@ mongoose.connect(databaseUrl);
 mongoose.connection.on('error', function (err) {
   console.error('connection error: ' + err);
 });
+var url = "https://hackernoon.com/tagged/software-development";
 
-module.exports =
-function getData() {
-  request("https://hackernoon.com/tagged/software-development", function (error, response, html) {
-    var $ = cheerio.load(html);
-    mongoose.connection.db.dropCollection("articledatas");
+function storeData(error, response, html){
+  if (error) throw error;
+  var $ = cheerio.load(html);
+    mongoose.connection.db.dropCollection("articles");
     $(".postArticle").each(function (i, element) {
       let item = {
         author: $(element).find("[data-user-id]").text(),
@@ -27,6 +27,8 @@ function getData() {
       db.Article.create(item);
       console.log("done" + i);
     })
-    console.log("Alldone");
-  })
+}
+module.exports = 
+function fetchData(url){
+  request(url, storeData);
 }
