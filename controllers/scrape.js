@@ -24,11 +24,14 @@ function storeData(error, response, html){
         date: $(element).find("time").text(),
         url: $(element).find(".postArticle-content").parent().attr("href")
       }
-      db.Article.create(item);
+      db.Article.create(item)
+      .catch(e=>{
+        console.log(e)
+      });
       console.log("done" + i);
     })
 }
-module.exports = 
 function fetchData(url){
   request(url, storeData);
 }
+module.exports = fetchData;
