@@ -12,12 +12,16 @@ var articleSchema = new Schema ({
     image: {
       type: String
     },
-    date: {
+    published: {
       type: String
     },
     url: {
       type: String
     },
+    date: {
+      type: Date,
+      default: Date.now
+    }
   })
 
 var Article = mongoose.model("Article", articleSchema);

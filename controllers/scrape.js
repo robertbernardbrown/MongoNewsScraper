@@ -21,7 +21,7 @@ function storeData(error, response, html){
         author: $(element).find("[data-user-id]").text(),
         title: $(element).find(".graf--title").text(),
         image: $(element).find("img").attr("src"),
-        date: $(element).find("time").text(),
+        published: $(element).find("time").text(),
         url: $(element).find(".postArticle-content").parent().attr("href")
       }
       db.Article.create(item)
