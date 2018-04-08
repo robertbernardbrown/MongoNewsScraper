@@ -13,6 +13,11 @@
 		<div class="main-container">
 			<div class="jumbotron text-center">
   			<h1>MongoWebScraper</h1>
+			{{#if req.route="/saved"}}
+			<nav>Home</nav>
+			{{else}}
+			<nav>Saved Articles</nav>
+			{{/if}}
 			</div>
 		{{{ body }}}
 		</div>

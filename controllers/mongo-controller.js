@@ -1,9 +1,9 @@
 const express = require("express");
-const router  = express.Router();
+const router = express.Router();
 const scrapeData = require("./scrape");
 const displayData = require("./display");
-var mongoose    = require("mongoose");
-var db          = require("../models");
+var mongoose = require("mongoose");
+var db = require("../models");
 var databaseUrl = "mongodb://localhost:27017/scrape";
 mongoose.connect(databaseUrl);
 mongoose.connection.on('error', function (err) {
@@ -13,23 +13,21 @@ mongoose.connection.on('error', function (err) {
 ///////////////////
 //ROUTE FUNCTIONS//
 ///////////////////
-function indexRender (req, res) {
+function indexRender(req, res) {
   //go into db and fetch articles
   db.Article.find({})
-    .then(function(data){
+    .then(function (data) {
       let articleObj = {
         article: data
       };
       res.render("index", articleObj);
     })
-    .catch(e=>{
-      console.error(e);
-    }); 
-  //display them with res.json on index page
-  // res.json(displayData);
-  // console.log(res);
+    .catch(e => {
+      res.render("index", e);
+    });
 }
-function fetchData (req, res) {
+
+function fetchData(req, res) {
   var url = "https://hackernoon.com/tagged/software-development";
   scrapeData(url);
   res.json(data);
