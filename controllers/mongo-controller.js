@@ -27,10 +27,25 @@ function indexRender(req, res) {
     });
 }
 
+function fetchSavedData(req, res) {
+  //go into db and fetch saved articles
+  db.Article.find({})
+    .where('saved').equals('true')
+    .then(function (data) {
+      let articleObj = {
+        article: data
+      };
+      res.render("saved", articleObj);
+    })
+    .catch(e => {
+      res.render("saved", e);
+    });
+}
+
 function fetchData(req, res) {
   var url = "https://hackernoon.com/tagged/software-development";
   scrapeData(url);
-  res.json(data);
+  // res.json(data);
 }
 
 //////////
@@ -38,5 +53,8 @@ function fetchData(req, res) {
 //////////
 router.get("/", indexRender);
 router.get("/api/fetch", fetchData);
+router.get("/saved", fetchSavedData);
+router.get("/clear", fetchData);
+
 
 module.exports = router;

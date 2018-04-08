@@ -10,7 +10,7 @@
             <h2>by: {{this.author}}</h2>
             <h2>Published: {{this.published}}</h2>
             <p>Date scraped: {{this.date}}</p>
-            <a target="_blank" href="{{this.url}}" class="btn btn-lg btn-primary" role="button">Read Article</a> <a href="#" class="btn btn-lg btn-default" role="button">Save Article</a>
+            <a target="_blank" href="{{this.url}}" class="btn btn-lg btn-primary" role="button">Read Article</a> <a href="/notes" class="btn btn-lg btn-default" role="button">Add Notes</a>
           </div>
         </div>
       </div>
@@ -19,6 +19,6 @@
   {{/each}}
   {{else}}
     <div class="container">
-      <h1>NO NEW ARTICLES</h1>
+      <h1>NO SAVED ARTICLES</h1>
     </div>
 {{/if}}
