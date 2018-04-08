@@ -10,18 +10,19 @@ mongoose.connection.on('error', function (err) {
   console.error('connection error: ' + err);
 });
 
-function displayData(error, collection){
+function displayData(error){
   if (error) throw error;
     db.Article.find({})
     .then(function(err,data){
         if (err) throw err;
-        console.log(data);
+        return data;
+        // arr.push(data);
     })
     .catch(e=>{
         console.error(e);
     }); 
 };
 
-displayData();
+// displayData();
 
 module.exports = displayData;

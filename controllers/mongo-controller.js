@@ -2,16 +2,37 @@ const express = require("express");
 const router  = express.Router();
 const scrapeData = require("./scrape");
 const displayData = require("./display");
+var mongoose    = require("mongoose");
+var db          = require("../models");
+var databaseUrl = "mongodb://localhost:27017/scrape";
+mongoose.connect(databaseUrl);
+mongoose.connection.on('error', function (err) {
+  console.error('connection error: ' + err);
+});
 
 ///////////////////
 //ROUTE FUNCTIONS//
 ///////////////////
 function indexRender (req, res) {
-  res.render("index");
+  //go into db and fetch articles
+  db.Article.find({})
+    .then(function(data){
+      let articleObj = {
+        article: data
+      };
+      res.render("index", articleObj);
+    })
+    .catch(e=>{
+      console.error(e);
+    }); 
+  //display them with res.json on index page
+  // res.json(displayData);
+  // console.log(res);
 }
 function fetchData (req, res) {
   var url = "https://hackernoon.com/tagged/software-development";
   scrapeData(url);
+  res.json(data);
 }
 
 //////////

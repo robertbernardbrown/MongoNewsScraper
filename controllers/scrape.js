@@ -20,7 +20,7 @@ function storeData(error, response, html){
       let item = {
         author: $(element).find("[data-user-id]").text(),
         title: $(element).find(".graf--title").text(),
-        image: $(element).find("img").attr("src"),
+        image: $(element).find("div.aspectRatioPlaceholder").children().next().attr("src"),
         published: $(element).find("time").text(),
         url: $(element).find(".postArticle-content").parent().attr("href")
       }
