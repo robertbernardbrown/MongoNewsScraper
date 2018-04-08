@@ -6,18 +6,22 @@ var articleSchema = new Schema ({
       type: String
     },
     title: {
-      type: String
+      type: String,
+      unique: true
     },
     image: {
       type: String
     },
-    date: {
+    published: {
       type: String
     },
     url: {
-      type: String,
-      unique: true
+      type: String
     },
+    date: {
+      type: Date,
+      default: Date.now
+    }
   })
 
 var Article = mongoose.model("Article", articleSchema);

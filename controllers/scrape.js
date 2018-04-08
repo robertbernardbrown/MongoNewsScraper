@@ -20,15 +20,18 @@ function storeData(error, response, html){
       let item = {
         author: $(element).find("[data-user-id]").text(),
         title: $(element).find(".graf--title").text(),
-        image: $(element).find("img").attr("src"),
-        date: $(element).find("time").text(),
+        image: $(element).find("div.aspectRatioPlaceholder").children().next().attr("src"),
+        published: $(element).find("time").text(),
         url: $(element).find(".postArticle-content").parent().attr("href")
       }
-      db.Article.create(item);
+      db.Article.create(item)
+      .catch(e=>{
+        console.log(e)
+      });
       console.log("done" + i);
     })
 }
-module.exports = 
 function fetchData(url){
   request(url, storeData);
 }
+module.exports = fetchData;

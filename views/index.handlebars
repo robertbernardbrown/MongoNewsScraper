@@ -1,1 +1,20 @@
-<h1>{{lunch}}</h1>
+{{#if article}}
+  {{#each article}}
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+        <a href="{{this.url}}"><img src="{{this.image}}" alt="{{this.image}}"></a>
+          <div class="caption">
+            <h1>{{this.title}}</h1>
+            <h2>by: {{this.author}}</h2>
+            <h2>Published: {{this.published}}</h2>
+            <p>Date scraped: {{this.date}}</p>
+            <a target="_blank" href="{{this.url}}" class="btn btn-lg btn-primary" role="button">Read Article</a> <a href="#" class="btn btn-lg btn-default" role="button">Notes</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+{{/if}}
