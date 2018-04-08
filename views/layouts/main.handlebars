@@ -12,12 +12,13 @@
 	<body>
 		<div class="main-container">
 			<div class="jumbotron text-center">
-  			<h1>MongoWebScraper</h1>
-			{{#if req.route="/saved"}}
-			<nav>Home</nav>
-			{{else}}
-			<nav>Saved Articles</nav>
-			{{/if}}
+  			<h1>WebDevNews</h1>
+				<nav class="btn-group">
+					<a href="/" class="btn btn-primary" role="button">Home</a>
+					<a href="/saved" class="btn btn-primary" role="button">Saved Articles</a>
+					<a href="/api/fetch" class="btn btn-success" role="button">Fetch Articles</a>
+					<a href="/api/fetch" class="btn btn-danger" role="button">Clear Articles</a>
+				</nav>
 			</div>
 		{{{ body }}}
 		</div>
