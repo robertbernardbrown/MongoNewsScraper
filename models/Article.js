@@ -21,6 +21,10 @@ var articleSchema = new Schema ({
     date: {
       type: Date,
       default: Date.now
+    },
+    saved: {
+      type: Boolean,
+      default: false
     }
   })
 
