@@ -1,6 +1,7 @@
 const express = require("express");
 const router  = express.Router();
 const scrapeData = require("./scrape");
+const displayData = require("./display");
 
 ///////////////////
 //ROUTE FUNCTIONS//

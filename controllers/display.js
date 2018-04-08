@@ -19,7 +19,7 @@ function displayData(error, collection){
     })
     .catch(e=>{
         console.error(e);
-    });
+    }); 
 };
 
 displayData();
