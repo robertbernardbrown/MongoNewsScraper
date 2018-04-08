@@ -1,10 +1,12 @@
-const express = require("express");
-const router = express.Router();
-const scrapeData = require("./scrape");
+const express     = require("express");
+const router      = express.Router();
+var cheerio       = require("cheerio");
+var request       = require("request");
+const scrapeData  = require("./scrape");
 const displayData = require("./display");
-var mongoose = require("mongoose");
-var db = require("../models");
-var databaseUrl = "mongodb://localhost:27017/scrape";
+var mongoose      = require("mongoose");
+var db            = require("../models");
+var databaseUrl   = "mongodb://localhost:27017/scrape";
 mongoose.connect(databaseUrl);
 mongoose.connection.on('error', function (err) {
   console.error('connection error: ' + err);
@@ -16,6 +18,7 @@ mongoose.connection.on('error', function (err) {
 function indexRender(req, res) {
   //go into db and fetch articles
   db.Article.find({})
+    .where('saved').equals('false')
     .then(function (data) {
       let articleObj = {
         article: data
@@ -42,10 +45,43 @@ function fetchSavedData(req, res) {
     });
 }
 
+function clearData(req, res) {
+  //go into db and fetch saved articles
+  db.Article.remove()
+    .where('saved').equals('false')
+    .then(function (data) {
+      // let articleObj = {
+      //   article: data
+      // };
+      res.redirect("/");
+    })
+    .catch(e => {
+      res.render("index", e);
+    });
+}
+
 function fetchData(req, res) {
   var url = "https://hackernoon.com/tagged/software-development";
-  scrapeData(url);
-  // res.json(data);
+    request(url, (error, response, html)=>{
+      if (error) throw error;
+      var $ = cheerio.load(html);
+        // mongoose.connection.db.dropCollection("articles");
+        $(".postArticle").each(function (i, element) {
+          let item = {
+            author: $(element).find("[data-user-id]").text(),
+            title: $(element).find(".graf--title").text(),
+            image: $(element).find("div.aspectRatioPlaceholder").children().next().attr("src"),
+            published: $(element).find("time").text(),
+            url: $(element).find(".postArticle-content").parent().attr("href")
+          }
+          db.Article.create(item)
+          .catch(e=>{
+            console.log(e)
+          });
+          console.log("done" + i);
+        })
+    });
+  res.redirect("/");
 }
 
 //////////
@@ -54,7 +90,7 @@ function fetchData(req, res) {
 router.get("/", indexRender);
 router.get("/api/fetch", fetchData);
 router.get("/saved", fetchSavedData);
-router.get("/clear", fetchData);
+router.get("/clear", clearData);
 
 
 module.exports = router;
