@@ -1,6 +1,6 @@
 $( document ).ready(function() {
     
-    $("#notes").on("click", function() {
+    $(".notes").on("click", function() {
         let id = $(this).data("id");
         $.ajax("api/notes/" + id, {
           type: "GET"
@@ -14,9 +14,39 @@ $( document ).ready(function() {
             let headerBlock = headerDiv.append(headerTitle);
             $(".modal-content").append(headerBlock);
             //MODAL BODY
-            
+            let bodyDiv = $("<div>").addClass("modal-body");
+            let bodyText;
+            if (data.notes) {
+                bodyText = bodyDiv.text("hi");
+            } else {
+                bodyText = bodyDiv.text("No Saved Notes");
+            }
+            let bodyNewNote = $("<h4>").text("New Note");
+            let bodyForm = $("<textarea>").addClass("form-control").attr("id", "noteText");
+            let bodyBlock = bodyDiv.append(bodyText).append(bodyNewNote).append(bodyForm);
+            $(".modal-content").append(bodyBlock);
+            //MODAL FOOTER
+            let footerDiv = $("<div>").addClass("modal-footer");
+            let footerSaveButton = $("<button>").addClass("btn btn-primary newNote").attr("data-id", `${data._id}`).attr("id", id).text("Save Note");
+            let footerBlock = footerDiv.append(footerSaveButton);
+            $(".modal-content").append(footerBlock);
           }
         );
       });
+
+    $(document).on("click", ".newNote", function(){
+        let id = $(this).attr("id");
+        let note = {
+            note: $("#noteText").val()
+        }
+        $.ajax("api/notes/" + id, {
+          type: "POST",
+          data: note
+        }).then(
+          function(data) {
+            console.log(data);
+            location.reload();
+          })
+    })
 
 });

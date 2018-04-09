@@ -127,6 +127,16 @@ function articleNotes(req, res){
   });
 };
 
+function articlePost(req, res){
+  let id = req.params.id;
+  let note = req.body.note;
+  console.log(note);
+  db.Article.findByIdAndUpdate(id, {notes:note}, function(err, data){
+    if (err) throw err;
+    console.log(data);
+  });
+};
+
 //////////
 //ROUTES//
 //////////
@@ -137,6 +147,7 @@ router.get("/api/fetch", fetchData);
 router.get("/api/save/:id", saveArticle);
 router.get("/api/unsave/:id", unsaveArticle);
 router.get("/api/notes/:id", articleNotes);
+router.post("/api/notes/:id", articlePost);
 router.get("/api/clear/saved", clearSaved);
 
 
