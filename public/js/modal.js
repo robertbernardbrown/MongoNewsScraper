@@ -55,4 +55,15 @@ $( document ).ready(function() {
           })
     })
 
+    $(document).on("click", ".clearNote", function(){
+        let id = $(this).attr("id");
+        $.ajax("api/notes/clear/" + id, {
+          type: "DELETE",
+        }).then(
+          function(data) {
+            console.log(data);
+            location.reload();
+          })
+    })
+
 });

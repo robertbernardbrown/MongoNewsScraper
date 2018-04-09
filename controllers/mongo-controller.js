@@ -151,6 +151,17 @@ function notePost(req, res){
   });
 };
 
+function noteDelete (req, res){
+  let id = req.params.id;
+  db.Note.findByIdAndRemove(id)
+  .then(function(deleted) {
+    res.redirect("saved");
+  })
+  .catch(function(err) {
+    res.json(err);
+  });
+};
+
 //////////
 //ROUTES//
 //////////
@@ -162,6 +173,7 @@ router.get("/api/save/:id", saveArticle);
 router.get("/api/unsave/:id", unsaveArticle);
 router.get("/api/notes/:id", articleNotesGet);
 router.post("/api/notes/:id", notePost);
+router.delete("/api/notes/clear/:id", noteDelete);
 router.get("/api/clear/saved", clearSaved);
 
 
