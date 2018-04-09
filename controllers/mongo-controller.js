@@ -105,6 +105,7 @@ function fetchData(req, res) {
 }
 
 function clearSaved(req, res){
+  db.Note.remove({});
   db.Article.remove()
   .where('saved').equals('true')
   .then(function (data) {
@@ -118,17 +119,16 @@ function clearSaved(req, res){
   });
 }
 
-function articleNotes(req, res){
+function articleNotesGet(req, res){
   let id = req.params.id;
   console.log(id);
   // db.Article.findById(id, function(err, data){
   //   if (err) throw err;
   //   res.send(data);
   // });
-  db.Article.findById({id})
+  db.Article.findById({_id:id})
   .populate("note")
   .exec((err,data)=>{
-    console.log(data);
     res.send(data);
   })
 };
@@ -160,7 +160,7 @@ router.get("/clear", clearData);
 router.get("/api/fetch", fetchData);
 router.get("/api/save/:id", saveArticle);
 router.get("/api/unsave/:id", unsaveArticle);
-router.get("/api/notes/:id", articleNotes);
+router.get("/api/notes/:id", articleNotesGet);
 router.post("/api/notes/:id", notePost);
 router.get("/api/clear/saved", clearSaved);
 

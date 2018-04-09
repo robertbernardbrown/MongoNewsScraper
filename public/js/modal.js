@@ -15,15 +15,21 @@ $( document ).ready(function() {
             $(".modal-content").append(headerBlock);
             //MODAL BODY
             let bodyDiv = $("<div>").addClass("modal-body");
-            let bodyText;
-            if (data.notes) {
-                bodyText = bodyDiv.text("hi");
+            let body;
+            if (data.note.length > 0) {
+                $.each(data.note, function( i, value ) {
+                    let textPanel = $("<div>").addClass("panel panel-body")
+                    let text = $("<p>").text(value.note);
+                    let textDeleteBtn = $("<button>").addClass("btn float-right btn-danger clearNote").attr("data-id", `${value._id}`).attr("id", value._id).text("X")
+                    body = textPanel.append(text).append(textDeleteBtn);
+                    bodyDiv.append(body);
+                  });
             } else {
                 bodyText = bodyDiv.text("No Saved Notes");
             }
-            let bodyNewNote = $("<h4>").text("New Note");
+            let bodyNewNote = $("<h4>").text("New Note:");
             let bodyForm = $("<textarea>").addClass("form-control").attr("id", "noteText");
-            let bodyBlock = bodyDiv.append(bodyText).append(bodyNewNote).append(bodyForm);
+            let bodyBlock = bodyDiv.append(bodyNewNote).append(bodyForm);
             $(".modal-content").append(bodyBlock);
             //MODAL FOOTER
             let footerDiv = $("<div>").addClass("modal-footer");
