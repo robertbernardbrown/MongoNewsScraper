@@ -11,7 +11,8 @@
             <h2>Published: {{this.published}}</h2>
             <p>Date scraped: {{this.date}}</p>
             <div class="btn-group">
-                <a target="_blank" href="{{this.url}}" class="btn btn-lg btn-primary" role="button">Read Article</a> <a href="api/save/{{this._id}}" class="btn btn-lg btn-default" role="button">Save Article</a>
+                <a href="api/save/{{this._id}}" class="btn btn-lg btn-default" role="button">Save Article</a>
+                <a target="_blank" href="{{this.url}}" class="btn btn-lg btn-primary" role="button">Read Article</a>  
             </div>
           </div>
         </div>
