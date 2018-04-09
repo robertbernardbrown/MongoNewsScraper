@@ -46,7 +46,7 @@ function fetchSavedData(req, res) {
 }
 
 function clearData(req, res) {
-  //go into db and fetch saved articles
+  //go into db and clear non-saved articles
   db.Article.remove()
     .where('saved').equals('false')
     .then(function (data) {
@@ -58,6 +58,14 @@ function clearData(req, res) {
     .catch(e => {
       res.render("index", e);
     });
+}
+
+function saveArticle(req, res) {
+  //go into db and clear non-saved articles
+  let id = req.params.id;
+  let query = { _id: id };
+  db.Article.findByIdAndUpdate(id, { saved: true });
+  res.redirect("/");
 }
 
 function fetchData(req, res) {
@@ -88,9 +96,11 @@ function fetchData(req, res) {
 //ROUTES//
 //////////
 router.get("/", indexRender);
-router.get("/api/fetch", fetchData);
 router.get("/saved", fetchSavedData);
 router.get("/clear", clearData);
+router.get("/api/fetch", fetchData);
+router.get("/api/save/:id", saveArticle);
+
 
 
 module.exports = router;
