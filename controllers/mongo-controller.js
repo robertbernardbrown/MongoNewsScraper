@@ -98,7 +98,6 @@ function fetchData(req, res) {
           .catch(e=>{
             console.log(e)
           });
-          console.log("done" + i);
         })
     });
   res.redirect("/");
@@ -109,9 +108,6 @@ function clearSaved(req, res){
   db.Article.remove()
   .where('saved').equals('true')
   .then(function (data) {
-    // let articleObj = {
-    //   article: data
-    // };
     res.redirect("/saved");
   })
   .catch(e => {
@@ -121,11 +117,6 @@ function clearSaved(req, res){
 
 function articleNotesGet(req, res){
   let id = req.params.id;
-  console.log(id);
-  // db.Article.findById(id, function(err, data){
-  //   if (err) throw err;
-  //   res.send(data);
-  // });
   db.Article.findById({_id:id})
   .populate("note")
   .exec((err,data)=>{
@@ -143,7 +134,6 @@ function notePost(req, res){
     return db.Article.findOneAndUpdate({}, { $push: { note: dbNote._id } }, { new: true });
   })
   .then(function(dbUser) {
-    console.log(dbUser);
     res.json(dbUser);
   })
   .catch(function(err) {

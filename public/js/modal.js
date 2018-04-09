@@ -50,7 +50,6 @@ $( document ).ready(function() {
           data: note
         }).then(
           function(data) {
-            console.log(data);
             location.reload();
           })
     })
@@ -61,7 +60,6 @@ $( document ).ready(function() {
           type: "DELETE",
         }).then(
           function(data) {
-            console.log(data);
             location.reload();
           })
     })
