@@ -1,5 +1,5 @@
-const express     = require("express");
-const router      = express.Router();
+const express       = require("express");
+const router        = express.Router();
 const cheerio       = require("cheerio");
 const request       = require("request");
 // const scrapeData  = require("./scrape");
@@ -104,6 +104,64 @@ function fetchData(req, res) {
   res.redirect("/");
 }
 
+function clearSaved(req, res){
+  db.Note.remove({});
+  db.Article.remove()
+  .where('saved').equals('true')
+  .then(function (data) {
+    // let articleObj = {
+    //   article: data
+    // };
+    res.redirect("/saved");
+  })
+  .catch(e => {
+    res.render("saved", e);
+  });
+}
+
+function articleNotesGet(req, res){
+  let id = req.params.id;
+  console.log(id);
+  // db.Article.findById(id, function(err, data){
+  //   if (err) throw err;
+  //   res.send(data);
+  // });
+  db.Article.findById({_id:id})
+  .populate("note")
+  .exec((err,data)=>{
+    res.send(data);
+  })
+};
+
+function notePost(req, res){
+  let id = req.params.id;
+  let note = {
+    note: req.body.note
+  }
+  db.Note.create(note)
+  .then(function(dbNote) {
+    return db.Article.findOneAndUpdate({}, { $push: { note: dbNote._id } }, { new: true });
+  })
+  .then(function(dbUser) {
+    console.log(dbUser);
+    res.json(dbUser);
+  })
+  .catch(function(err) {
+    res.json(err);
+  });
+};
+
+function noteDelete (req, res){
+  let id = req.params.id;
+  db.Note.findByIdAndRemove(id)
+  .then(function(deleted) {
+    res.redirect("saved");
+  })
+  .catch(function(err) {
+    res.json(err);
+  });
+};
+
 //////////
 //ROUTES//
 //////////
@@ -113,6 +171,11 @@ router.get("/clear", clearData);
 router.get("/api/fetch", fetchData);
 router.get("/api/save/:id", saveArticle);
 router.get("/api/unsave/:id", unsaveArticle);
+router.get("/api/notes/:id", articleNotesGet);
+router.post("/api/notes/:id", notePost);
+router.delete("/api/notes/clear/:id", noteDelete);
+router.get("/api/clear/saved", clearSaved);
+
 
 
 

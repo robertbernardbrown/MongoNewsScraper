@@ -12,7 +12,7 @@
             <p>Date scraped: {{this.date}}</p>
             <div class="btn-group">
               <a href="/api/unsave/{{this._id}}" class="btn btn-lg btn-danger" role="button">Unsave</a>
-              <a href="/notes" class="btn btn-lg btn-default" role="button">Add Notes</a>
+              <a href="/api/notes/{{this._id}}" data-id="{{this._id}}" class="btn btn-lg btn-default notes" data-toggle="modal" data-target="#exampleModal" role="button">Add Notes</a>
               <a target="_blank" href="{{this.url}}" class="btn btn-lg btn-primary" role="button">Read Article</a> 
             </div>
           </div>
@@ -22,10 +22,17 @@
   </div>
   {{/each}}
   <div class="container text-center">
-    <a href="/api/clearSaved" class="btn btn-lg btn-primary" role="button">Clear All Saved Articles</a>
+    <a href="/api/clear/saved" class="btn btn-lg btn-primary" role="button">Clear All Saved Articles</a>
   </div>
   {{else}}
     <div class="container">
       <h1>NO SAVED ARTICLES</h1>
     </div>
 {{/if}}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
