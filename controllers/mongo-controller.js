@@ -104,9 +104,28 @@ function fetchData(req, res) {
   res.redirect("/");
 }
 
-function articleNotes(req, res){
-
+function clearSaved(req, res){
+  db.Article.remove()
+  .where('saved').equals('true')
+  .then(function (data) {
+    // let articleObj = {
+    //   article: data
+    // };
+    res.redirect("/saved");
+  })
+  .catch(e => {
+    res.render("saved", e);
+  });
 }
+
+function articleNotes(req, res){
+  let id = req.params.id;
+  console.log(id);
+  db.Article.findById(id, function(err, data){
+    if (err) throw err;
+    res.send(data);
+  });
+};
 
 //////////
 //ROUTES//
@@ -118,6 +137,8 @@ router.get("/api/fetch", fetchData);
 router.get("/api/save/:id", saveArticle);
 router.get("/api/unsave/:id", unsaveArticle);
 router.get("/api/notes/:id", articleNotes);
+router.get("/api/clear/saved", clearSaved);
+
 
 
 
