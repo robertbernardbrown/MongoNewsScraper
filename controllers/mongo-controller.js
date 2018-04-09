@@ -1,5 +1,5 @@
-const express     = require("express");
-const router      = express.Router();
+const express       = require("express");
+const router        = express.Router();
 const cheerio       = require("cheerio");
 const request       = require("request");
 // const scrapeData  = require("./scrape");
@@ -104,6 +104,10 @@ function fetchData(req, res) {
   res.redirect("/");
 }
 
+function articleNotes(req, res){
+
+}
+
 //////////
 //ROUTES//
 //////////
@@ -113,6 +117,7 @@ router.get("/clear", clearData);
 router.get("/api/fetch", fetchData);
 router.get("/api/save/:id", saveArticle);
 router.get("/api/unsave/:id", unsaveArticle);
+router.get("/api/notes/:id", articleNotes);
 
 
 
