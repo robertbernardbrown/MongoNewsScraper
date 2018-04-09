@@ -1,12 +1,12 @@
 const express     = require("express");
 const router      = express.Router();
-var cheerio       = require("cheerio");
-var request       = require("request");
-const scrapeData  = require("./scrape");
-const displayData = require("./display");
-var mongoose      = require("mongoose");
-var db            = require("../models");
-var databaseUrl   = "mongodb://localhost:27017/scrape";
+const cheerio       = require("cheerio");
+const request       = require("request");
+// const scrapeData  = require("./scrape");
+// const displayData = require("./display");
+const mongoose      = require("mongoose");
+const db            = require("../models");
+const databaseUrl   = "mongodb://localhost:27017/scrape";
 mongoose.connect(databaseUrl);
 mongoose.connection.on('error', function (err) {
   console.error('connection error: ' + err);
