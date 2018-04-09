@@ -121,19 +121,33 @@ function clearSaved(req, res){
 function articleNotes(req, res){
   let id = req.params.id;
   console.log(id);
-  db.Article.findById(id, function(err, data){
-    if (err) throw err;
+  // db.Article.findById(id, function(err, data){
+  //   if (err) throw err;
+  //   res.send(data);
+  // });
+  db.Article.findById({id})
+  .populate("note")
+  .exec((err,data)=>{
+    console.log(data);
     res.send(data);
-  });
+  })
 };
 
-function articlePost(req, res){
+function notePost(req, res){
   let id = req.params.id;
-  let note = req.body.note;
-  console.log(note);
-  db.Article.findByIdAndUpdate(id, {notes:note}, function(err, data){
-    if (err) throw err;
-    console.log(data);
+  let note = {
+    note: req.body.note
+  }
+  db.Note.create(note)
+  .then(function(dbNote) {
+    return db.Article.findOneAndUpdate({}, { $push: { note: dbNote._id } }, { new: true });
+  })
+  .then(function(dbUser) {
+    console.log(dbUser);
+    res.json(dbUser);
+  })
+  .catch(function(err) {
+    res.json(err);
   });
 };
 
@@ -147,7 +161,7 @@ router.get("/api/fetch", fetchData);
 router.get("/api/save/:id", saveArticle);
 router.get("/api/unsave/:id", unsaveArticle);
 router.get("/api/notes/:id", articleNotes);
-router.post("/api/notes/:id", articlePost);
+router.post("/api/notes/:id", notePost);
 router.get("/api/clear/saved", clearSaved);
 
 
