@@ -64,8 +64,20 @@ function saveArticle(req, res) {
   //go into db and clear non-saved articles
   let id = req.params.id;
   let query = { _id: id };
-  db.Article.findByIdAndUpdate(id, { saved: true });
+  db.Article.findByIdAndUpdate(id, { saved: true }, function(){
+    console.log("success");
+  });
   res.redirect("/");
+}
+
+function unsaveArticle(req, res) {
+  //go into db and clear non-saved articles
+  let id = req.params.id;
+  let query = { _id: id };
+  db.Article.findByIdAndUpdate(id, { saved: false }, function(){
+    console.log("success");
+  });
+  res.redirect("/saved");
 }
 
 function fetchData(req, res) {
@@ -100,6 +112,7 @@ router.get("/saved", fetchSavedData);
 router.get("/clear", clearData);
 router.get("/api/fetch", fetchData);
 router.get("/api/save/:id", saveArticle);
+router.get("/api/unsave/:id", unsaveArticle);
 
 
 

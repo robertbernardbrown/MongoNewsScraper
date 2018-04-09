@@ -11,7 +11,9 @@
             <h2>Published: {{this.published}}</h2>
             <p>Date scraped: {{this.date}}</p>
             <div class="btn-group">
-              <a target="_blank" href="{{this.url}}" class="btn btn-lg btn-primary" role="button">Read Article</a> <a href="/notes" class="btn btn-lg btn-default" role="button">Add Notes</a>
+              <a href="/api/unsave/{{this._id}}" class="btn btn-lg btn-danger" role="button">Unsave</a>
+              <a href="/notes" class="btn btn-lg btn-default" role="button">Add Notes</a>
+              <a target="_blank" href="{{this.url}}" class="btn btn-lg btn-primary" role="button">Read Article</a> 
             </div>
           </div>
         </div>
@@ -19,6 +21,9 @@
     </div>
   </div>
   {{/each}}
+  <div class="container text-center">
+    <a href="/api/clearSaved" class="btn btn-lg btn-primary" role="button">Clear All Saved Articles</a>
+  </div>
   {{else}}
     <div class="container">
       <h1>NO SAVED ARTICLES</h1>
