@@ -176,7 +176,4 @@ router.post("/api/notes/:id", notePost);
 router.delete("/api/notes/clear/:id", noteDelete);
 router.get("/api/clear/saved", clearSaved);
 
-
-
-
 module.exports = router;
