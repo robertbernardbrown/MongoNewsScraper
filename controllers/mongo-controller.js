@@ -9,7 +9,7 @@ const herokuDBUrl   = "mongodb://username:password@ds241059.mlab.com:41059/herok
 console.log(process.env.MONGODB_URI);
 console.log(herokuDBUrl);
 if (process.env.MONGODB_URI) {
-  mongoose.connect(MONGODB_URI);
+  mongoose.connect(process.env.MONGODB_URI);
 } else {
   mongoose.connect(databaseUrl);
 }
