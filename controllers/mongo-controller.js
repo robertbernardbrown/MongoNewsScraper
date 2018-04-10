@@ -6,8 +6,8 @@ const mongoose      = require("mongoose");
 const db            = require("../models");
 const databaseUrl   = "mongodb://localhost:27017/scrape";
 const herokuDBUrl   = "mongodb://<adminuser>:<password>@ds241059.mlab.com:41059/heroku_tfjgdbr8";
-if (process.env.MONGOLAB_URI) {
-  mongoose.connect(herokuDBUrl);
+if (process.env.MONGODB_URI) {
+  mongoose.connect(MONGODB_URI);
 } else {
   mongoose.connect(databaseUrl);
 }
