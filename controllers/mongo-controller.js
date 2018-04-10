@@ -67,9 +67,13 @@ function saveArticle(req, res) {
   //go into db and clear non-saved articles
   let id = req.params.id;
   let query = { _id: id };
-  db.Article.findByIdAndUpdate(id, { saved: true }, function(){
-    console.log("success");
-  });
+  db.Article.findByIdAndUpdate(id, { saved: true })
+  .then(function(data){
+    console.log(data);
+  })
+  .catch(err=>{
+    res.json(err);
+  })
   res.redirect("/");
 }
 
@@ -77,9 +81,13 @@ function unsaveArticle(req, res) {
   //go into db and clear non-saved articles
   let id = req.params.id;
   let query = { _id: id };
-  db.Article.findByIdAndUpdate(id, { saved: false }, function(){
-    console.log("success");
-  });
+  db.Article.findByIdAndUpdate(id, { saved: false })
+  .then(function(data){
+    console.log(data);
+  })
+  .catch(err=>{
+    res.json(err);
+  })
   res.redirect("/saved");
 }
 
