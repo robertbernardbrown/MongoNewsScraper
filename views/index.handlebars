@@ -1,27 +1,25 @@
-{{#if article}}
-  {{#each article}}
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">
+<div id="thumbnail-container" class="container">
+  {{#if article}}
+    {{#each article}}
+    <div class="col-sm-6 col-md-4" id="col-container">
+      <div class="thumbnail" id="thumbnail-display">
         <a href="{{this.url}}"><img src="{{this.image}}" alt="{{this.image}}"></a>
-          <div class="caption">
-            <h1>{{this.title}}</h1>
-            <h2>by: {{this.author}}</h2>
-            <h2>Published: {{this.published}}</h2>
-            <p>Date scraped: {{this.date}}</p>
-            <div class="btn-group">
-                <a href="api/save/{{this._id}}" class="btn btn-lg btn-default" role="button">Save Article</a>
-                <a target="_blank" href="{{this.url}}" class="btn btn-lg btn-primary" role="button">Read Article</a>  
-            </div>
+        <div class="caption">
+          <h1>{{this.title}}</h1>
+          <h2>by: {{this.author}}</h2>
+          <h2>Published: {{this.published}}</h2>
+          <p>Date scraped: {{this.date}}</p>
+          <div class="btn-group">
+            <a href="api/save/{{this._id}}" class="btn btn-lg btn-default" role="button">Save Article</a>
+            <a target="_blank" href="{{this.url}}" class="btn btn-lg btn-primary" role="button">Read Article</a>  
           </div>
         </div>
       </div>
     </div>
-  </div>
-  {{/each}}
-  {{else}}
-    <div class="container">
+    {{/each}}
+    {{else}}
+    <div class="container" id="no-article">
       <h1>NO NEW ARTICLES</h1>
     </div>
-{{/if}}
+  {{/if}}
+</div>
