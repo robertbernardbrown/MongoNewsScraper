@@ -1,23 +1,45 @@
+html, body {
+    height: 100%;
+}
+.panelBody {
+    border-bottom: 1px solid #aac7ef;
+    padding-bottom: 5px;
+    display: table;
+    width: 100%;
+}
+.left-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+.right-cell {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+}
+
 @media only screen and (min-width: 768px) {
     #thumbnail-display {
         overflow: hidden; 
-        /* outline: 2px solid red; */
-        /* position:relative; */
-        /* display: block; */
     }
     #col-container {
-        /* overflow: hidden;  */
-        /* outline: 2px solid blue; */
-        /* width: 50%; */
-        /* padding:1px; */
         display: inline-block;
         padding: .25rem;
         width:  50%;
     }
     #thumbnail-container {
-        /* outline:2px solid green; */
-        /* column-fill: balance */
         width:100%;
+    }
+    #wrap {
+      min-height: 100%;
+    }
+    #main {
+      overflow:auto;
+    }
+    .footer {
+      position: relative;
+      height: 150px;
+      clear:both;
+      padding-top:20px;
     }
 }
 @media only screen and (max-width: 768px) {

@@ -18,9 +18,9 @@ $( document ).ready(function() {
             let body;
             if (data.note.length > 0) {
                 $.each(data.note, function( i, value ) {
-                    let textPanel = $("<div>").addClass("panel panel-body")
-                    let text = $("<p>").text(value.note);
-                    let textDeleteBtn = $("<button>").addClass("btn float-right btn-danger clearNote").attr("data-id", `${value._id}`).attr("id", value._id).text("X")
+                    let textPanel = $("<div>").addClass("panel panel-body clearfix panelBody")
+                    let text = $("<p>").text(value.note).addClass("left-cell");
+                    let textDeleteBtn = $("<button>").addClass("btn float-right btn-danger right-cell pull-right clearNote").attr("data-id", `${value._id}`).attr("id", value._id).text("X")
                     body = textPanel.append(text).append(textDeleteBtn);
                     bodyDiv.append(body);
                   });
