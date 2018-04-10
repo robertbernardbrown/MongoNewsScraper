@@ -95,12 +95,14 @@ function fetchData(req, res) {
             url: $(element).find(".postArticle-content").parent().attr("href")
           }
           db.Article.create(item)
+          .then(function(){
+            res.redirect("/");
+          })
           .catch(e=>{
             console.log(e)
           });
         })
     });
-  res.redirect("/");
 }
 
 function clearSaved(req, res){
@@ -117,9 +119,10 @@ function clearSaved(req, res){
 
 function articleNotesGet(req, res){
   let id = req.params.id;
+  console.log(id);
   db.Article.findById({_id:id})
   .populate("note")
-  .exec((err,data)=>{
+  .then(data=>{
     res.send(data);
   })
 };
@@ -129,12 +132,14 @@ function notePost(req, res){
   let note = {
     note: req.body.note
   }
+  console.log(note);
   db.Note.create(note)
   .then(function(dbNote) {
-    return db.Article.findOneAndUpdate({}, { $push: { note: dbNote._id } }, { new: true });
+    return db.Article.findOneAndUpdate({_id:id}, { $push: { note: dbNote._id } }, { new: true });
   })
-  .then(function(dbUser) {
-    res.json(dbUser);
+  .then(function(data) {
+    console.log(data);
+    res.json(data);
   })
   .catch(function(err) {
     res.json(err);
