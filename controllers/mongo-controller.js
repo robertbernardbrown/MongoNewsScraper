@@ -28,8 +28,8 @@ function indexRender(req, res) {
       };
       res.render("index", articleObj);
     })
-    .catch(e => {
-      res.render("index", e);
+    .catch(err => {
+      res.json(err);
     });
 }
 
@@ -43,8 +43,8 @@ function fetchSavedData(req, res) {
       };
       res.render("saved", articleObj);
     })
-    .catch(e => {
-      res.render("saved", e);
+    .catch(err => {
+      res.json(err);
     });
 }
 
@@ -58,8 +58,8 @@ function clearData(req, res) {
       // };
       res.redirect("/");
     })
-    .catch(e => {
-      res.render("index", e);
+    .catch(err => {
+      res.json(err);
     });
 }
 
@@ -101,8 +101,8 @@ function fetchData(req, res) {
           .then(function(){
             res.redirect("/");
           })
-          .catch(e=>{
-            console.log(e)
+          .catch(err=>{
+            res.json(err)
           });
         })
     });
@@ -115,8 +115,8 @@ function clearSaved(req, res){
   .then(function (data) {
     res.redirect("/saved");
   })
-  .catch(e => {
-    res.render("saved", e);
+  .catch(err => {
+    res.json(err);
   });
 }
 
@@ -128,6 +128,9 @@ function articleNotesGet(req, res){
   .then(data=>{
     res.send(data);
   })
+  .catch(err => {
+    res.json(err);
+  });
 };
 
 function notePost(req, res){
@@ -144,7 +147,7 @@ function notePost(req, res){
     console.log(data);
     res.json(data);
   })
-  .catch(function(err) {
+  .catch(err=> {
     res.json(err);
   });
 };
@@ -155,7 +158,7 @@ function noteDelete (req, res){
   .then(function(deleted) {
     res.redirect("saved");
   })
-  .catch(function(err) {
+  .catch(err=> {
     res.json(err);
   });
 };
