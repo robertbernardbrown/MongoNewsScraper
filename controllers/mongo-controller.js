@@ -5,7 +5,12 @@ const request       = require("request");
 const mongoose      = require("mongoose");
 const db            = require("../models");
 const databaseUrl   = "mongodb://localhost:27017/scrape";
-mongoose.connect(databaseUrl);
+const herokuDBUrl   = "mongodb://username:password@ds241059.mlab.com:41059/heroku_tfjgdbr8";
+if (process.env.MONGOLAB_URI) {
+  mongoose.connect(herokuDBUrl);
+} else {
+  mongoose.connect(databaseUrl);
+}
 mongoose.connection.on('error', function (err) {
   console.error('connection error: ' + err);
 });
