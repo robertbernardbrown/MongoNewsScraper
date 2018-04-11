@@ -10,8 +10,8 @@
           <h2>Published: {{this.published}}</h2>
           <p>Date scraped: {{this.date}}</p>
           <div class="btn-group">
-            <a href="/api/unsave/{{this._id}}" class="btn btn-lg btn-danger" role="button">Unsave</a>
-            <a href="/api/notes/{{this._id}}" data-id="{{this._id}}" class="btn btn-lg btn-default notes" data-toggle="modal" data-target="#exampleModal" role="button">Add Notes</a>
+            <a data-id="{{this._id}}" class="btn btn-lg btn-danger unsave" role="button">Unsave</a>
+            <a data-id="{{this._id}}" class="btn btn-lg btn-default notes" role="button">Add Notes</a>
             <a target="_blank" href="{{this.url}}" class="btn btn-lg btn-primary" role="button">Read Article</a> 
           </div>
         </div>
@@ -20,10 +20,9 @@
     {{/each}}
     <div class="container text-center" id="wrap">
       <div id="main" class="container clear-top"> 
-        <a href="/api/clear/saved" class="btn btn-lg btn-primary" role="button">Clear All Saved Articles</a>
+        <a class="btn btn-lg btn-primary clearSaved" role="button">Clear All Saved Articles</a>
       </div>
     </div>
-    {{!-- <footer class="footer"></footer> --}}
     {{else}}
       <div class="container">
         <h1>NO SAVED ARTICLES</h1>

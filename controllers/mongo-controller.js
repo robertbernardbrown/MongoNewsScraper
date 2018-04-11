@@ -80,15 +80,16 @@ function saveArticle(req, res) {
 function unsaveArticle(req, res) {
   //go into db and clear non-saved articles
   let id = req.params.id;
+  console.log(id);
   let query = { _id: id };
   db.Article.findByIdAndUpdate(id, { saved: false })
   .then(function(data){
     console.log(data);
+    res.redirect("saved");
   })
   .catch(err=>{
     res.json(err);
   })
-  res.redirect("/saved");
 }
 
 function fetchData(req, res) {
@@ -96,7 +97,6 @@ function fetchData(req, res) {
     request(url, (error, response, html)=>{
       if (error) throw error;
       var $ = cheerio.load(html);
-        // mongoose.connection.db.dropCollection("articles");
         $(".postArticle").each(function (i, element) {
           let item = {
             author: $(element).find("[data-user-id]").text(),
@@ -110,7 +110,8 @@ function fetchData(req, res) {
             res.redirect("/");
           })
           .catch(err=>{
-            res.json(err)
+            console.log(err);
+            res.redirect("/");
           });
         })
     });
@@ -121,7 +122,7 @@ function clearSaved(req, res){
   db.Article.remove()
   .where('saved').equals('true')
   .then(function (data) {
-    res.redirect("/saved");
+    res.render("saved");
   })
   .catch(err => {
     res.json(err);
@@ -130,11 +131,10 @@ function clearSaved(req, res){
 
 function articleNotesGet(req, res){
   let id = req.params.id;
-  console.log(id);
   db.Article.findById({_id:id})
   .populate("note")
   .then(data=>{
-    res.send(data);
+    res.json(data);
   })
   .catch(err => {
     res.json(err);
@@ -146,13 +146,11 @@ function notePost(req, res){
   let note = {
     note: req.body.note
   }
-  console.log(note);
   db.Note.create(note)
   .then(function(dbNote) {
     return db.Article.findOneAndUpdate({_id:id}, { $push: { note: dbNote._id } }, { new: true });
   })
   .then(function(data) {
-    console.log(data);
     res.json(data);
   })
   .catch(err=> {
@@ -179,10 +177,10 @@ router.get("/saved", fetchSavedData);
 router.get("/clear", clearData);
 router.get("/api/fetch", fetchData);
 router.get("/api/save/:id", saveArticle);
-router.get("/api/unsave/:id", unsaveArticle);
+router.put("/api/unsave/:id", unsaveArticle);
 router.get("/api/notes/:id", articleNotesGet);
 router.post("/api/notes/:id", notePost);
 router.delete("/api/notes/clear/:id", noteDelete);
-router.get("/api/clear/saved", clearSaved);
+router.delete("/api/clear/saved", clearSaved);
 
 module.exports = router;

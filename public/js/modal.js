@@ -36,32 +36,53 @@ $( document ).ready(function() {
             let footerSaveButton = $("<button>").addClass("btn btn-primary newNote").attr("data-id", `${data._id}`).attr("id", id).text("Save Note");
             let footerBlock = footerDiv.append(footerSaveButton);
             $(".modal-content").append(footerBlock);
+            $('#exampleModal').modal('show');
           }
         );
       });
 
     $(document).on("click", ".newNote", function(){
-        let id = $(this).attr("id");
-        let note = {
-            note: $("#noteText").val()
-        }
-        $.ajax("api/notes/" + id, {
-          type: "POST",
-          data: note
-        }).then(
-          function(data) {
-            location.reload();
-          })
+      let id = $(this).attr("id");
+      let note = {
+          note: $("#noteText").val()
+      }
+      $.ajax("api/notes/" + id, {
+        type: "POST",
+        data: note
+      }).then(
+        function(data) {
+          location.reload();
+      })
     })
 
     $(document).on("click", ".clearNote", function(){
-        let id = $(this).attr("id");
-        $.ajax("api/notes/clear/" + id, {
-          type: "DELETE",
-        }).then(
-          function(data) {
-            location.reload();
-          })
+      let id = $(this).attr("id");
+      $.ajax("api/notes/clear/" + id, {
+        type: "DELETE",
+      }).then(
+        function(data) {
+          location.reload();
+        })
+    })
+
+    $(document).on("click", ".unsave", function(){
+      let id = $(this).data("id");
+      $.ajax(`api/unsave/${id}`, {
+        type: "PUT",
+      }).then(
+        function(data) {
+          location.reload();
+        })
+    })
+
+    $(document).on("click", ".clearSaved", function(){
+      let id = $(this).data("id");
+      $.ajax(`api/clear/saved`, {
+        type: "DELETE",
+      }).then(
+        function(data) {
+          location.reload();
+        })
     })
 
 });
