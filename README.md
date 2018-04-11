@@ -23,6 +23,9 @@ npm [body-parser](https://www.npmjs.com/package/body-parser)
 
 npm [express-handlebars](https://www.npmjs.com/package/express-handlebars)
 
+npm [cheerio](https://www.npmjs.com/package/cheerio)
+
+
 ### Technologies Used
 
 Languages - HTML5, CSS3, Javascript, Node.js, MongoDB-Mongoose, jQuery
